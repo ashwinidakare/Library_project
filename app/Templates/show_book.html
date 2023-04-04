@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <title>Book Table</title>
+    </head>
+    <style>
+        table,th, td { border : solid black
+        }
+    </style>
+    <body>
+        <table>
+            <tr>
+            <th>Book ID</th>
+            
+            <th>Book Name</th>
+            <th>Book Qty</th>
+            <th>Book Price</th>
+            <th>Book Author</th>
+            <th>Book Is_Published</th>
+            <th> Book Action</th>
+            </tr>
+            <tr>
+                {% for book in books %}
+            <td>{{book.id}}</td>
+            <td>{{book.name}}</td>
+            <td>{{book.qty}}</td>
+            <td>{{book.price}}</td>
+            <td>{{book.author}}</td>
+            <td>{{book.is_published}}</td>
+
+            <td>
+                <!-- <input type="submit" value="Update"> -->
+                {% if active %}
+                <form action="{% url 'update_book' book.id %}" method="post">
+                    {% csrf_token %}
+                    <!-- <input type="submit" value="Update" > -->
+                    <input type="submit" value="Update" >
+
+                </form>
+                {% endif %}
+                
+                <form action="{% url 'hard_delete_book' book.id %}" method= 'post'>
+                    {% csrf_token %}
+                    <input type="submit" value=" Hard Delete">
+
+                </form>
+                
+                {% if active %}
+                <form action="{% url 'soft_delete_book' book.id %}" method= 'post'>
+                    {% csrf_token %}
+                    <input type="submit" value="Soft Delete">
+                {% endif %}
+
+                </form>
+                {% if inactive %}
+                <from action="{% url 'restore_book' book.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Restore">
+
+                </from>
+                {% endif %}
+
+
+
+            </td>
+           </tr>
+              {% endfor %}
+
+              
+        
+            
+
+</table>
+    </body>
+    <a href="{% url 'home_page' %}">Home Page</a>
+</html>

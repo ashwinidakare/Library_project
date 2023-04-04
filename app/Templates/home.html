@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <title>Liabery Page</title>
+    </head>
+    <body>
+        <h1>Liabery Application</h1>
+        <form action = "{% url 'home_page' %}" method="post">
+            {% csrf_token %}
+            {% if single_book %}
+            ID:-<input type="number" name="book_id" value="{{ single_book.id}}" readonly></input><br></br>
+            {% endif %}
+
+            Name:-<input type="text" name="book_name" value="{{ single_book.name }}"></input><br></br>
+            Qty:-<input type="number" name="book_qty" value="{{ single_book.qty }}"></input><br></br>
+            Price:-<input type="number" name="book_price" value="{{ single_book.price }}"></input><br></br>
+            Author:-<input type="text" name="book_author" value="{{ single_book.author}}"></input><br></br>
+            {% if single_book %}
+              {% if single_book.is_published == True %}
+                Is_Published:- Yes<input type="radio" name="book_is_published" checked></input> NO<input type="radio" name="book_is_published"></input><br></br>
+              {% else %} 
+                Is_Published:- Yes<input type="radio" name="book_is_published" ></input> NO<input type="radio" name="book_is_published" checked></input><br></br>
+              {% endif %}
+            {% else %}
+                Is_Published:- Yes<input type="radio" name="book_is_published" ></input> NO<input type="radio" name="book_is_published"></input><br></br>
+              
+            {% endif %}
+            <input type="submit" name="Sumbit">
+
+
+            
+        </form>
+        {% for books in book %}
+           {{books}}
+        {% endfor %}
+    </body><br>
+    
+    <a href="{% url 'active_book' %}"> Active Book</a>
+    <a href="{% url 'inactive_book' %}"> In-Active Book</a>
+
+
+</html>
